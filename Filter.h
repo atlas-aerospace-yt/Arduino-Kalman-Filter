@@ -1,7 +1,7 @@
 /*
 *
 *	This the Library for the Atlas Aerospace Kalman filter.
-*   This library may be modified to suit your specific use-case.
+* This library may be modified to suit your specific use-case.
 *
 *
 *	Written by:
