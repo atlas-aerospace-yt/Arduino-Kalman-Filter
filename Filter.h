@@ -22,32 +22,39 @@
 */
 
 #pragma once
+#include "BasicLinearAlgebra.h"
+#include "math.h"
 
-struct Kalman {
+// Kalman Filter Struct
+struct Kalman{
 
-  // variables for the filter
+  // State space dynamics
+  BLA::Matrix<2,2> A;
+  BLA::Matrix<2> B;
+  BLA::Matrix<2,2> Q;
+  BLA::Matrix<1> R;
+  BLA::Matrix<2> x;
+  BLA::Matrix<1> u;
+  BLA::Matrix<2,2> P = {0.0f, 0.0f, 0.0f, 0.0f};
+  BLA::Matrix<2> K = {0.0f, 0.0f};
+  BLA::Matrix<1,2> H = {0.0f, 1.0f};
+  BLA::Matrix<2,2> I = {0.0f, 0.0f, 0.0f, 0.0f};
+  BLA::Matrix<2> xPredicted;
+  BLA::Matrix<2,2> pMinus;
+  BLA::Matrix<1> S;
+  
+  // Filter
+  void updateState(BLA::Matrix<1> y, BLA::Matrix<1> u, float dt){
 
-  double  A, B, C;
-  double  Q, R;
-  double  U = 0.0, Y = 0.0;
-  double  x_hat = 0.0, P = 0.0;
+    // Update the Kalman filter
+    xPredicted = A * x + B * u;
+    xPredicted = x + xPredicted * dt;
+    pMinus = A * P * ~A + Q;
 
-  // kalman loop function
-
-  double Kalman::Kalman_Filter_Update() {
-
-    double x_hat_minus_1 = A * x_hat + B * U;
-
-    P = A * P * A + Q;
-
-    double K = P * C * (1.0f / (C * P * C + R));
-
-    x_hat_minus_1 += K * (Y - C * x_hat_minus_1);
-
-    P = (1 - K *  C) *  P;
-
-    x_hat = x_hat_minus_1;
-
-    return x_hat;
+    // Correct the Kalman filter error
+    S = H * pMinus * ~H + R;
+    this-> K = pMinus * ~H * BLA::Invert(S);
+    this-> x = xPredicted + K * (y - H * xPredicted);
+    this-> P = (I - K * H) * pMinus;
   }
 };
