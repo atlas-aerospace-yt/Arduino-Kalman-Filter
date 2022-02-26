@@ -28,7 +28,7 @@
 // Kalman Filter Struct
 struct Kalman{
 
-  // State space dynamics
+  // State space dynamics (EDIT TO MATCH YOUR STATE SPACE DYNAMICS)
   BLA::Matrix<2,2> A;
   BLA::Matrix<2> B;
   BLA::Matrix<2,2> Q;
