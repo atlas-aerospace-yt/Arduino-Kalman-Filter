@@ -1,26 +1,3 @@
-/*
-*
-* This the Library for the Atlas Aerospace Kalman filter.
-* This library may be modified to suit your specific use-case.
-*
-*
-*	Written by:
-*
-*	Atlas Aerospace 03/08/2021
-*
-*
-*	Some use cases may be:
-*
-*	- Filtering IMU data
-*	- Filtering Barometer data
-*	- Filtering Ultrasonic Distance sensors
-*
-*
-*	My YouTube:
-*
-*	https://www.youtube.com/channel/UCWd6oqc8nbL-EX3Cxxk8wFA
-*/
-
 #pragma once
 #include "BasicLinearAlgebra.h"
 #include "math.h"
